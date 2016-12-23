@@ -50,7 +50,7 @@ public class BookDetailActivity extends AppCompatActivity {
             BookDetailFragment fragment = new BookDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.book_detail_container, fragment)
+                    .add(R.id.activity_main_webview, fragment)
                     .commit();
         }
     }

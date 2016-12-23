@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.example.john.blue.dummy.DummyContent;
@@ -49,7 +50,7 @@ public class BookDetailFragment extends Fragment {
             Activity activity = this.getActivity();
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
-                appBarLayout.setTitle(mItem.content);
+                appBarLayout.setTitle("title");//mItem.content);
             }
         }
     }
@@ -59,9 +60,17 @@ public class BookDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.book_detail, container, false);
 
-        // Show the dummy content as text in a TextView.
+
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.book_detail)).setText(mItem.details);
+            //((TextView) rootView.findViewById(R.id.book_detail)).setText("some text");//mItem.details);
+
+            String html = "<html><body>"+mItem.details+"</body></html>";
+            String mime = "text/html";
+            String encoding = "utf-8";
+
+            WebView browser =  (WebView) rootView.findViewById(R.id.browser);
+            browser.getSettings().setJavaScriptEnabled(true);
+            browser.loadDataWithBaseURL(null, html, mime, encoding, null);
         }
 
         return rootView;
