@@ -10,13 +10,10 @@ public class BookCollection {
 
 
     public static final List<Book> BOOKS = new ArrayList<Book>();
-
     public static final Map<String, Book> ID_TO_BOOK_MAP = new HashMap<String, Book>();
-
     private static final int COUNT = 25;
 
     static {
-        // Add some sample items.
         for (int i = 1; i <= COUNT; i++) {
             addItem(createDummyBook(i));
         }
@@ -36,7 +33,7 @@ public class BookCollection {
         builder.append("Once upon a time... ").append(position);
         return builder.toString();
     }
-    
+
     public static class Book {
         public final String id;
         public final String content;
