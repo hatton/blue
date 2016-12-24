@@ -1,6 +1,7 @@
 package com.example.john.blue;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,29 +12,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.john.blue.bookCollection.BookCollection;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
-/**
- * An activity representing a list of Books. This activity
- * has different presentations for handset and tablet-size devices. On
- * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link BookDetailActivity} representing
- * item details. On tablets, the activity presents the list of items and
- * item details side-by-side using two vertical panes.
- */
 public class BookListActivity extends AppCompatActivity {
-
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
-    private boolean mTwoPane;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setupFiles();
         setContentView(R.layout.activity_book_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -45,6 +38,31 @@ public class BookListActivity extends AppCompatActivity {
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
 
+    }
+    private void setupFiles() {
+        ContextWrapper cw = new ContextWrapper(this.getApplicationContext());
+        File directory = cw.getDir("bloomreader", Context.MODE_PRIVATE);
+
+        File file = new File(directory, "one.htm");
+        if(file.exists()) {
+            file.delete();
+        }
+
+        try {
+            FileWriter out = new FileWriter(file);
+            out.write("<html><body>Story One</body></html>");
+            out.close();
+        } catch (IOException e) {
+            showError(e.getMessage());
+        }
+    }
+
+    private void showError(CharSequence message) {
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, message, duration);
+        toast.show();
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
@@ -69,7 +87,7 @@ public class BookListActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mItem = mValues.get(position);
+            holder.book = mValues.get(position);
             holder.mIdView.setText(mValues.get(position).id);
             holder.mContentView.setText(mValues.get(position).content);
 
@@ -78,7 +96,9 @@ public class BookListActivity extends AppCompatActivity {
                 public void onClick(View v) {
                 Context context = v.getContext();
                 Intent intent = new Intent(context, ReaderActivity.class);
-                //intent.putExtra(BookDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                intent.putExtra("PATH",holder.book.path);
+
+                //intent.putExtra(BookDetailFragment.ARG_ITEM_ID, holder.book.id);
 
                 //Intent intent = new Intent(context, FullscreenActivity.class);
 
@@ -96,7 +116,7 @@ public class BookListActivity extends AppCompatActivity {
             public final View mView;
             public final TextView mIdView;
             public final TextView mContentView;
-            public BookCollection.Book mItem;
+            public BookCollection.Book book;
 
             public ViewHolder(View view) {
                 super(view);
