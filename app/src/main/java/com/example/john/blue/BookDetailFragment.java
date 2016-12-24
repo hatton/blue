@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
-import com.example.john.blue.dummy.BookCollection;
+import com.example.john.blue.bookCollection.BookCollection;
 
 /**
  * A fragment representing a single Book detail screen.
@@ -60,17 +60,17 @@ public class BookDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.book_detail, container, false);
 
 
-        if (mItem != null) {
-            //((TextView) rootView.findViewById(R.id.book_detail)).setText("some text");//mItem.details);
-
-            String html = "<html><body>"+mItem.details+"</body></html>";
-            String mime = "text/html";
-            String encoding = "utf-8";
-
-            WebView browser =  (WebView) rootView.findViewById(R.id.browser);
-            browser.getSettings().setJavaScriptEnabled(true);
-            browser.loadDataWithBaseURL(null, html, mime, encoding, null);
-        }
+//        if (mItem != null) {
+//            //((TextView) rootView.findViewById(R.id.book_detail)).setText("some text");//mItem.details);
+//
+//            String html = "<html><body>"+mItem.details+"</body></html>";
+//            String mime = "text/html";
+//            String encoding = "utf-8";
+//
+//            WebView browser =  (WebView) rootView.findViewById(R.id.browser);
+//            browser.getSettings().setJavaScriptEnabled(true);
+//            browser.loadDataWithBaseURL(null, html, mime, encoding, null);
+//        }
 
         return rootView;
     }

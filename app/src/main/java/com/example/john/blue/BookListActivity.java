@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.example.john.blue.dummy.BookCollection;
+import com.example.john.blue.bookCollection.BookCollection;
 
 import java.util.List;
 
@@ -77,8 +77,8 @@ public class BookListActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                 Context context = v.getContext();
-                Intent intent = new Intent(context, BookDetailActivity.class);
-                intent.putExtra(BookDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                Intent intent = new Intent(context, ReaderActivity.class);
+                //intent.putExtra(BookDetailFragment.ARG_ITEM_ID, holder.mItem.id);
 
                 //Intent intent = new Intent(context, FullscreenActivity.class);
 

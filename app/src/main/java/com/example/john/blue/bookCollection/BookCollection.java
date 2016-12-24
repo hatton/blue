@@ -1,4 +1,4 @@
-package com.example.john.blue.dummy;
+package com.example.john.blue.bookCollection;
 
 import java.util.ArrayList;
 import java.util.HashMap;

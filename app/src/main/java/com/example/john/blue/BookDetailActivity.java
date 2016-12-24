@@ -50,6 +50,8 @@ public class BookDetailActivity extends AppCompatActivity {
             BookDetailFragment fragment = new BookDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
+                    //TODO: we don't actually use this activity_main_webview, but if I remove this
+                    // line, then the BookDetailFragment is not added
                     .add(R.id.activity_main_webview, fragment)
                     .commit();
         }
