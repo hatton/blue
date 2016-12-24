@@ -19,28 +19,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BookDetailActivity"
-            android:label="@string/title_book_detail"
-            android:parentActivityName=".BookListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.john.blue.BookListActivity" />
-        </activity>
-        <activity
-            android:name=".BookReader"
-            android:label="@string/title_activity_book_reader"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".BookSwipe"
-            android:label="@string/title_activity_book_swipe"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".FullscreenActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_fullscreen"
-            android:theme="@style/FullscreenTheme" />
-        <activity
             android:name=".ReaderActivity"
             android:label="@string/title_activity_reader"
             android:theme="@style/AppTheme.NoActionBar"></activity>
