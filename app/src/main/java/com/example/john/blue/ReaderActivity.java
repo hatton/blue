@@ -2,6 +2,7 @@ package com.example.john.blue;
 
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -27,19 +28,14 @@ public class ReaderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reader);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        loadBook();
+        Intent intent = getIntent();
+        loadBook(intent.getStringExtra("PATH"));
     }
 
-    private void loadBook() {
-        ContextWrapper cw = new ContextWrapper(this.getApplicationContext());
-        File directory = cw.getDir("bloomreader", Context.MODE_PRIVATE);
-
-        //TODO: get this from the Book in the Bundle that was given to this activity
-        File file = new File(directory, "one.htm");
-
+    private void loadBook(String path) {
+        File file = new File(path);
         WebView browser =  (WebView) findViewById(R.id.browser);
         browser.getSettings().setJavaScriptEnabled(true);
         browser.loadUrl("file:///" + file.getAbsolutePath());
-        //browser.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
     }
 }
