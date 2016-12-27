@@ -3,19 +3,17 @@ package com.example.john.blue.books;
 public class Book {
     public final String id;
     public final String path;
-    public final String content;
-    public final String details;
+    public final String name;
 
-    public Book(String id, String content, String details, String path) {
+    public Book(String id, String name, String path) {
         this.id = id;
         this.path = path;
-        this.content = content;
-        this.details = details;
+        this.name = name;
     }
 
     @Override
     public String toString() {
-        return content;
+        return name;
     }
 
 //        public static String convertStreamToString(InputStream is) throws IOException {

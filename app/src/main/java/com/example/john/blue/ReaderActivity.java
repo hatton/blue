@@ -36,6 +36,10 @@ public class ReaderActivity extends AppCompatActivity {
         File file = new File(path);
         WebView browser =  (WebView) findViewById(R.id.browser);
         browser.getSettings().setJavaScriptEnabled(true);
-        browser.loadUrl("file:///" + file.getAbsolutePath());
+        if(file.isDirectory()) {
+            browser.loadUrl("file:///" + file.getAbsolutePath() + "/" + file.getName() + ".htm");
+        } else { // just a dummy file thing
+            browser.loadUrl("file:///" + file.getAbsolutePath());
+        }
     }
 }

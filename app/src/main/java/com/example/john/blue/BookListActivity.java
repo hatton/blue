@@ -28,8 +28,6 @@ public class BookListActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("My Library"); //doesn't work. the previous statemetn sets the title to the app name, and this doesn't change that.
-
 
         View recyclerView = findViewById(R.id.book_list);
         assert recyclerView != null;
@@ -58,8 +56,7 @@ public class BookListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.book = _bookCollection.get(position);
-            holder.mIdView.setText(_bookCollection.get(position).id);
-            holder.mContentView.setText(_bookCollection.get(position).content);
+            holder.mTitleView.setText(_bookCollection.get(position).name);
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -67,7 +64,6 @@ public class BookListActivity extends AppCompatActivity {
                 Context context = v.getContext();
                 Intent intent = new Intent(context, ReaderActivity.class);
                 intent.putExtra("PATH",holder.book.path);
-
                 context.startActivity(intent);
                 }
             });
@@ -80,20 +76,18 @@ public class BookListActivity extends AppCompatActivity {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
-            public final TextView mIdView;
-            public final TextView mContentView;
+            public final TextView mTitleView;
             public Book book;
 
             public ViewHolder(View view) {
                 super(view);
                 mView = view;
-                mIdView = (TextView) view.findViewById(R.id.id);
-                mContentView = (TextView) view.findViewById(R.id.content);
+                mTitleView = (TextView) view.findViewById(R.id.title);
             }
 
             @Override
             public String toString() {
-                return super.toString() + " '" + mContentView.getText() + "'";
+                return super.toString() + " '" + mTitleView.getText() + "'";
             }
         }
     }

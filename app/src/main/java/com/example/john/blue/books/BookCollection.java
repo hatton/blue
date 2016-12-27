@@ -12,11 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class BookCollection {
 
-    private  List<Book> _books = new ArrayList<Book>();
-    public  final Map<String, Book> ID_TO_BOOK_MAP = new HashMap<String, Book>();
+    private List<Book> _books = new ArrayList<Book>();
+    public final Map<String, Book> ID_TO_BOOK_MAP = new HashMap<String, Book>();
 
     public Book get(int i) {
         return _books.get(i);
@@ -26,40 +25,45 @@ public class BookCollection {
         return _books.size();
     }
 
-    private  void addItem(Book item) {
+    private  void addBook(Book item) {
         _books.add(item);
         ID_TO_BOOK_MAP.put(item.id, item);
     }
 
-    private  Book createDummyBook(Context context, int position) {
-        String path = setupFiles(context, position);
-        return new Book(String.valueOf(position), "The three Dwarves, volume " + position, makeDetails(position), path);
-    }
-
-    private  String makeDetails(int position) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Once upon a time... ").append(position);
-        return builder.toString();
-    }
 
     public void init(Context context) {
-        for (int i = 1; i <= 5; i++) {
-            addItem(createDummyBook(context, i));
+
+        SampleBookLoader.CopySampleBooksFromAssetsIntoBooksFolder(context);
+
+        for (int i = 2; i <= 4; i++) {
+            createFilesForDummyBook(context, i);
+        }
+
+        ContextWrapper cw = new ContextWrapper(context);
+        File directory = cw.getDir("bloomreader", Context.MODE_PRIVATE);
+        File[] files = directory.listFiles();
+        for (int i = 0; i < files.length; i++)
+        {
+            String path = files[i].getAbsolutePath();
+            String name = files[i].getName();
+            addBook(new Book(String.valueOf(i), name, path));
         }
     }
 
-    private String setupFiles(Context context, int position) {
+    private String createFilesForDummyBook(Context context, int position) {
         ContextWrapper cw = new ContextWrapper(context);
         File directory = cw.getDir("bloomreader", Context.MODE_PRIVATE);
 
-        File file = new File(directory, position + ".htm");
+        File bookDir = new File(directory, "The " + position + " dwarves");
+        bookDir.mkdir();
+        File file = new File(bookDir, "The " + position + " dwarves.htm");
         if(file.exists()) {
             file.delete();
         }
 
         try {
             FileWriter out = new FileWriter(file);
-            out.write("<html><body>Story " + position + "</body></html>");
+            out.write("<html><body>Once upon a time, " + position + " dwarves lived in a forest.</body></html>");
             out.close();
         } catch (IOException e) {
             showError(context, e.getMessage());
@@ -74,4 +78,6 @@ public class BookCollection {
         Toast toast = Toast.makeText(context, message, duration);
         toast.show();
     }
+
+
 }
